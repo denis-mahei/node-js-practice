@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "name": "Modern Marble Cheese",
+    "price": "702.20",
+    "category": "Computers",
+    "description": "Stylish Tuna designed to make you stand out with optimistic looks"
+  },
+  {
+    "name": "Tasty Wooden Shirt",
+    "price": "702.00",
+    "category": "Outdoors",
+    "description": "The sleek and whopping Shirt comes with gold LED lighting for smart functionality"
+  },
+  {
+    "name": "Bespoke Concrete Tuna",
+    "price": "975.95",
+    "category": "Books",
+    "description": "The Miller Salad is the latest in a series of tedious products from Muller, Herzog and Bradtke"
+  },
+  {
+    "name": "Tasty Wooden Shirt",
+    "price": "950.69",
+    "category": "Books",
+    "description": "Our fresh-inspired Fish brings a taste of luxury to your lucky lifestyle"
+  }
+]
