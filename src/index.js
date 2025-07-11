@@ -1,9 +1,5 @@
-import express from 'express';
+import dotenv from 'dotenv';
 
-const exp = express();
+dotenv.config();
 
-const PORT = 3000;
-
-exp.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+import { initMongoConnection } from './db/initMongoConnection.js';
