@@ -17,3 +17,18 @@ export const getProductsController = async (req, res) => {
     data: products,
   });
 };
+
+export const getProductById = async (req, res) => {
+  const { productId } = req.params;
+  const product = await getProductById(productId);
+
+  if (!product) {
+    createHttpError(404, 'Product not found!');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found product ${product.name}`,
+    data: product,
+  });
+};
