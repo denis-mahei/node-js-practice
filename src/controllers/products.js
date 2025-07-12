@@ -55,6 +55,35 @@ export const deleteProductController = async (req, res, next) => {
   res.status(204).send();
 };
 
-export const upsertProductController = () => {
+export const upsertProductController = async (req, res, next) => {
+  const { productId } = req.params;
+  const result = await updateProduct(productId, req.body, { upsert: true });
 
+  if (!result) {
+    next(createHttpError(404, 'Product not found'));
+  }
+
+  const status = res.status.isNew ? 201 : 200;
+
+  res.status(status).join({
+    status,
+    message: `Successfully ${result.isNew ? 'created' : 'updated'} contact ${result.product.name}`,
+    data: result.product,
+  });
+};
+
+export const patchProductController = async (req, res, next) => {
+  const { productId } = req.params;
+
+  const result = await updateProduct(productId, req.body);
+
+  if (!result) {
+    next(createHttpError(404, 'Product not found!'));
+  }
+
+  res.json({
+    status: 200,
+    message: `Successfully patched a ${result.product.name}`,
+    data: result.product,
+  });
 };
