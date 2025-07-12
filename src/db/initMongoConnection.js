@@ -9,7 +9,7 @@ export const initMongoConnection = async () => {
 
     const fullUrl = `mongodb+srv://${user}:${pass}@${url}/${db}?retryWrites=true&w=majority&appName=Cluster0`;
     await mongoose.connect(fullUrl);
-
+    
     console.log('Mongo connection successfully established!');
   } catch (e) {
     console.log('Mongo connection error: ', e.message);

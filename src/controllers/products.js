@@ -23,7 +23,7 @@ export const getProductByIdController = async (req, res) => {
   const product = await getProductById(productId);
 
   if (!product) {
-    createHttpError(404, 'Product not found!');
+    throw createHttpError(404, 'Product not found!');
   }
 
   res.status(200).json({
@@ -63,9 +63,9 @@ export const upsertProductController = async (req, res, next) => {
     next(createHttpError(404, 'Product not found'));
   }
 
-  const status = res.status.isNew ? 201 : 200;
+  const status = result.isNew ? 201 : 200;
 
-  res.status(status).join({
+  res.status(status).json({
     status,
     message: `Successfully ${result.isNew ? 'created' : 'updated'} contact ${result.product.name}`,
     data: result.product,
