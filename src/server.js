@@ -5,6 +5,7 @@ import { sayHello } from './middlewares/welcome.js';
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import productsRouter from './routers/products.js';
 
 const PORT = getEnvVar('PORT', '3000');
 
@@ -25,8 +26,10 @@ export const setupServer = () => {
 
   exp.get('/', sayHello);
 
+  exp.use('/api/products', productsRouter);
+
   exp.use(errorHandler);
-  
+
   exp.use(notFoundHandler);
 
   exp.listen(PORT, () => {
