@@ -3,15 +3,33 @@ import cors from 'cors';
 import pino from 'pino-http';
 import { sayHello } from './middlewares/welcome.js';
 import { getEnvVar } from './utils/getEnvVar.js';
-
-const exp = express();
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 const PORT = getEnvVar('PORT', '3000');
 
-exp.use(express.json());
+export const setupServer = () => {
+  const exp = express();
 
-exp.get('/', sayHello);
+  exp.use(express.json());
 
-exp.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  exp.use(cors());
+
+  exp.use(
+    pino({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
+
+  exp.get('/', sayHello);
+
+  exp.use(errorHandler);
+  
+  exp.use(notFoundHandler);
+
+  exp.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};

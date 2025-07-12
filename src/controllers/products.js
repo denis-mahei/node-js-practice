@@ -18,7 +18,7 @@ export const getProductsController = async (req, res) => {
   });
 };
 
-export const getProductById = async (req, res) => {
+export const getProductByIdController = async (req, res) => {
   const { productId } = req.params;
   const product = await getProductById(productId);
 
@@ -31,4 +31,30 @@ export const getProductById = async (req, res) => {
     message: `Successfully found product ${product.name}`,
     data: product,
   });
+};
+
+export const createProductController = async (req, res) => {
+  const product = await createNewProduct(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: `Successfully created a ${product.name}`,
+    data: product,
+  });
+};
+
+export const deleteProductController = async (req, res, next) => {
+  const { productId } = req.params;
+
+  const product = await deleteProduct(productId);
+
+  if (!product) {
+    next(createHttpError(404, 'Product not found!'));
+  }
+
+  res.status(204).send();
+};
+
+export const upsertProductController = () => {
+
 };
