@@ -1,21 +1,31 @@
 import { Product } from '../models/products.js';
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-export const getAllProducts = async () => {
-  const result = await Product.find();
-  return result;
+export const getAllProducts = async ({ page, perPage }) => {
+  const limit = perPage;
+  const skip = (page - 1) * perPage;
+
+  const productsQuery = Product.find();
+  const productsCount = await Product.find()
+    .merge(productsQuery)
+    .countDocuments();
+
+  const products = await productsQuery.skip(skip).limit(limit).exec();
+
+  const paginationData = calculatePaginationData(productsCount, perPage, page);
+
+  return {
+    data: products,
+    ...paginationData,
+  };
 };
 
-export const getProductById = async (id) => await Product.findById(id);
+export const getProductById = (id) => Product.findById(id);
 
-export const createNewProduct = async (payload) => {
-  const product = await Product.create(payload);
-  return product;
-};
+export const createNewProduct = (payload) => Product.create(payload);
 
-export const deleteProduct = async (productId) => {
-  const product = await Product.findOneAndDelete({ _id: productId });
-  return product;
-};
+export const deleteProduct = (productId) =>
+  Product.findOneAndDelete({ _id: productId });
 
 export const updateProduct = async (productId, payload, options = {}) => {
   const rawResult = await Product.findOneAndUpdate(
