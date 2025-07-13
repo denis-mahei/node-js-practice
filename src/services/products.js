@@ -7,21 +7,32 @@ export const getAllProducts = async ({
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
+  filter = {},
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
-  
+
   const productsQuery = Product.find();
-  const productsCount = await Product.find()
-    .merge(productsQuery)
-    .countDocuments();
 
-  const products = await productsQuery
-    .skip(skip)
-    .limit(limit)
-    .sort({ [sortBy]: sortOrder })
-    .exec();
+  if (filter.minPrice || filter.maxPrice) {
+    const priceFilter = {};
+    if (filter.minPrice) priceFilter.$gte = filter.minPrice;
+    if (filter.maxPrice) priceFilter.$lte = filter.maxPrice;
+    productsQuery.where('price', priceFilter);
+  }
 
+  if (filter.category) {
+    productsQuery.where('category').equals(filter.category);
+  }
+
+  const [productsCount, products] = await Promise.all([
+    Product.find().merge(productsQuery).countDocuments(),
+    productsQuery
+      .skip(skip)
+      .limit(limit)
+      .sort({ [sortBy]: sortOrder })
+      .exec(),
+  ]);
   const paginationData = calculatePaginationData(productsCount, perPage, page);
 
   return {
