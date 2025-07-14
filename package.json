@@ -18,7 +18,8 @@
     "globals": "^16.3.0",
     "http-errors": "^2.0.0",
     "joi": "^17.13.3",
-    "mongoose": "^8.16.3"
+    "mongoose": "^8.16.3",
+    "redoc-express": "^2.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10",

@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Products API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /products:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products
+    post:
+      summary: Create a new product
+      responses:
+        '201':
+          description: Product created
+  /products/{id}:
+    get:
+      summary: Get product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Single product
+        '404':
+          description: Not found
+    patch:
+      summary: Update product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product updated
+    delete:
+      summary: Delete product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Product deleted
