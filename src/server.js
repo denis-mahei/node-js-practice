@@ -32,7 +32,6 @@ export const setupServer = () => {
   exp.get('/', sayHello);
 
   exp.use('/api/products', productsRouter);
-
   exp.use(
     '/docs',
     redoc({
