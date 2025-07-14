@@ -4,7 +4,8 @@
   "description": "Practice",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "Denys Mahei <denmahei@gmail.com> (https://github.com/denis-mahei)",
